@@ -1,0 +1,9 @@
+<h1>{{ table.name }}</h1>
+<h2>Capacity: {{ table.capacity }}</h2>
+<form action="" method="POST"> 
+    {% csrf_token %}
+    {{ form.as_p }}
+    <Button type='submit'>Reserve</Button>
+</form>
+
+

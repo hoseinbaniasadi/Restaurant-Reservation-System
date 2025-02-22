@@ -1,5 +1,5 @@
-/venv
 *.sqlite3
 __pycache__/
 */migrations/
 .env
+/venv

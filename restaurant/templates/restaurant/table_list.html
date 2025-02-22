@@ -1,0 +1,3 @@
+{% for table in tables %}
+    <h1><a href="{{ table.get_absolute_url }}">{{ table.name }}</h1></a>
+{% endfor %}
