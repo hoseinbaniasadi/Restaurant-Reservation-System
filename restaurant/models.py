@@ -5,6 +5,7 @@ from django.urls import reverse
 class Table(models.Model):
     name = models.CharField(max_length=100)
     capacity = models.IntegerField()
+    price = models.PositiveIntegerField(default=0)
     is_available = models.BooleanField(default=True)
 
     def __str__(self):

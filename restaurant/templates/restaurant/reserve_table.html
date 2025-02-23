@@ -1,6 +1,7 @@
 <h1>"Reservation"</h1>
 <h2>{{ table.name }}</h2>
-<h3>Capacity: {{ table.capacity }}</h3>
+<h4>Capacity: {{ table.capacity }}</h4>
+<h4>Price: {{ table.price }}</h4>
 <form action="" method="POST"> 
     {% csrf_token %}
     {{ form.as_p }}

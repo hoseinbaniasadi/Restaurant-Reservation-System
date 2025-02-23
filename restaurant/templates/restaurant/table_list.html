@@ -1,3 +1,5 @@
 {% for table in tables %}
     <h1><a href="{{ table.get_absolute_url }}">{{ table.name }}</h1></a>
+    <h3> {{ table.price }} </h3>
+    --------------------------
 {% endfor %}
