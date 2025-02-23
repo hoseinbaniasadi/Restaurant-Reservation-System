@@ -23,3 +23,23 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"Reservation by {self.user.username} on {self.date} at {self.time}"
+
+class Review(models.Model):
+    RATING_CHOICES = (
+        ('1', 'Very Bad'),
+        ('2', 'Bad'),
+        ('3', 'Normal'),
+        ('4', 'Good'),
+        ('5', 'Perfect'),
+    )
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE, related_name='review')
+    rating = models.CharField(max_length=10, choices=RATING_CHOICES)
+    comment = models.TextField(blank=True) 
+    active = models.BooleanField(default=True)
+
+    datetime_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review by {self.user.username} for {self.table.name}"

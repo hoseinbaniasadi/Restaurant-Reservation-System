@@ -1,9 +1,24 @@
-<h1>{{ table.name }}</h1>
-<h2>Capacity: {{ table.capacity }}</h2>
+<h1>"Reservation"</h1>
+<h2>{{ table.name }}</h2>
+<h3>Capacity: {{ table.capacity }}</h3>
 <form action="" method="POST"> 
     {% csrf_token %}
     {{ form.as_p }}
     <Button type='submit'>Reserve</Button>
 </form>
 
+<br>
+<h1>"Write your comment"</h1>
+<form action="{% url "review" table.id %}" method='POST'>
+    {% csrf_token %}
+    {{ review_form.as_p }}
+    <Button type='submit'>Send</Button>
+</form>
 
+<br>
+<h1>"comments"</h1>
+{% for review in table_review %}
+    <h3>{{ review.user.username }}</h3>
+    <h3>{{ review.comment }}</h3>
+    -----------------------------
+{% endfor %}

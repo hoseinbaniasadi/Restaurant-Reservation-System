@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.contrib import messages
+from django.urls import reverse
 
-from .models import Table
-from .forms import ReservationForm
+from .models import Review, Table
+from .forms import ReservationForm, ReviewForm
 
 # class ReserveTable(generic.ListView):
 #     model = Table
@@ -18,6 +19,9 @@ class TableList(generic.ListView):
 
 def reserve_table(request, pk):
     table = get_object_or_404(Table, pk=pk)
+    table_review = table.review.all()
+    review_form = ReviewForm()
+    
     if request.method == 'POST':
         form = ReservationForm(request.POST, initial={'table_id': pk})
         if form.is_valid():
@@ -30,4 +34,26 @@ def reserve_table(request, pk):
             return redirect('home')
     else:   
         form = ReservationForm(initial={'table_id': pk})
-    return render(request, 'restaurant/reserve_table.html', context={'form': form, 'table': table})
+        review_form = ReviewForm()
+    return render(request, 'restaurant/reserve_table.html', context={
+        'form': form,
+        'table': table,
+        'table_review': table_review, 
+        'review_form': review_form,
+        })
+
+
+def table_review(request, pk):
+    table = get_object_or_404(Table, pk=pk)
+    if request.method == 'POST':
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            form = review_form.save(commit=False)
+            form.table = table
+            form.user = request.user
+            form.save()
+            return redirect(reverse('reserve_table', args=[pk]))
+
+
+
+

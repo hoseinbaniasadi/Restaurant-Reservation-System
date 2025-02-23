@@ -1,9 +1,9 @@
 from django import forms
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError
-from datetime import date
+import datetime
 
-from .models import Reservation, Table
+from .models import Reservation, Table, Review
 
 class ReservationForm(forms.ModelForm):
     table_id = forms.IntegerField(widget=forms.HiddenInput)
@@ -35,9 +35,14 @@ class ReservationForm(forms.ModelForm):
                 raise ValidationError(f"This table can obly accommodate {table.capacity} pepole")
          
          
-         if date < date.today():
+         if date < datetime.date.today():
              raise ValidationError('You cannot reserve a table for a past date.')
          
          
          return cleaned_data
              
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'comment']
