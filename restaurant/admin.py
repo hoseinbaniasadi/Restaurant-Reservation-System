@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Table, Reservation, Review
+from .models import Table, Reservation, Review, Payment
 
 @admin.register(Table)
 class TableAdmin(admin.ModelAdmin):
@@ -21,3 +21,9 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = ['user', 'table', 'comment', 'rating', 'datetime_created', 'active']
     search_fields = ['user__username', 'table__name']
     list_filter = ['active', ]
+
+
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ['reservation', 'amount', 'status', 'zarinpal_authority', 'zarinpal_ref_id', 'zarinpal_data']
+    
