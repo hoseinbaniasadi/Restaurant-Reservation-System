@@ -6,6 +6,7 @@ class Table(models.Model):
     name = models.CharField(max_length=100)
     capacity = models.IntegerField()
     price = models.PositiveIntegerField(default=0)
+    image = models.ImageField(upload_to='cover/', blank=True)
     is_available = models.BooleanField(default=True)
 
     def __str__(self):

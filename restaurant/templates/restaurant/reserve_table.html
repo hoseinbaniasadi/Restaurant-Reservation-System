@@ -1,25 +1,59 @@
-<h1>"Reservation | <a href="{% url "table_list" %}">Table List</a> "</h1> 
-<h2>{{ table.name }}</h2>
-<h4>Capacity: {{ table.capacity }}</h4>
-<h4>Price: {{ table.price }}</h4>
-<form action="" method="POST"> 
-    {% csrf_token %}
-    {{ form.as_p }}
-    <Button type='submit'>Reserve</Button>
-</form>
+{% extends "_base.html" %}
 
-<br>
-<h1>"Write your comment"</h1>
-<form action="{% url "review" table.id %}" method='POST'>
-    {% csrf_token %}
-    {{ review_form.as_p }}
-    <Button type='submit'>Send</Button>
-</form>
+{% block title %}Reservation{% endblock title %}
 
-<br>
-<h1>"comments"</h1>
-{% for review in table_review %}
-    <h3>{{ review.user.username }}</h3>
-    <h3>{{ review.comment }}</h3>
-    -----------------------------
-{% endfor %}
+{% block content %}
+    <section class="py-0">
+        <div class="px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2">
+                <div class="col mb-5">
+                    <div class="card ">
+                        <!-- Product image-->
+                        {% if table.image %}
+                        <img class="card-img-top" src="{{ table.image.url }}" alt="..." />
+                        {% endif %}
+                        <!-- Product details-->
+                        <div class="card-body">
+                            <div class="text">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ table.name }}</h5>
+                                <!-- Product price-->
+                                Table Price :{{ table.price }}<br>
+                                Table Capacity : {{ table.capacity }}
+                                <form action="" method="POST"> 
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <Button class="btn btn-outline-dark mt-auto" type='submit'>Reserve</Button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            {% comment %} <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ table.get_absolute_url }}">View options</a></div> {% endcomment %}
+                            <br>
+                            <h1>"Write your comment"</h1>
+                            <form action="{% url "review" table.id %}" method='POST'>
+                                {% csrf_token %}
+                                {{ review_form.as_p }}
+                                <Button class="btn btn-outline-dark mt-auto" type='submit'>Send</Button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <br>
+    <div class="alert alert-info mt-3">
+        <strong>
+            <h1>"comments"</h1>
+            {% for review in table_review %}
+                <h3>{{ review.user.username }}</h3>
+                <h3>{{ review.comment }}</h3>
+                -----------------------------
+            {% endfor %}
+        </strong>
+    </div>
+{% endblock content %}

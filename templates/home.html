@@ -1,1 +1,8 @@
-HOMEPAGE | <a href="{% url "table_list" %}">Reserve Table</a>
+{% extends "_base.html" %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    HOMEPAGE | <a href="{% url "table_list" %}">Reserve Table</a>
+
+{% endblock content %}
